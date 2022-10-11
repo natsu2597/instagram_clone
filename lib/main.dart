@@ -13,7 +13,7 @@ void main() async{
   await Firebase.initializeApp();
   if(kIsWeb)
   {
-    await Firebase.initializeApp(options: const FirebaseOptions(apiKey: "AIzaSyB4xSX6bkEs6Qc8DgAxVI8_rIFn-bo9viI", appId:  "1:122437450515:web:404e8fbe527db79b33f8e6", messagingSenderId: "122437450515", projectId: "instagram-clone-5f992",storageBucket: "instagram-clone-5f992.appspot.com"));
+    await Firebase.initializeApp(options: const FirebaseOptions(apiKey: "AIzaSyB4xSX6bkEs6Qc8DgAxVI8_rIFn-bo9viI", appId:  "1:122437450515:web:404e8fbe527db79b33f8e6", messagingSenderId: "122437450515", projectId: "instagram-clone-5f992",storageBucket: "gs://instagram-clone-5f992.appspot.com"));
   }
   else
   {

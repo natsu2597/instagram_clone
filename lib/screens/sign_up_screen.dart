@@ -20,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _userNamaeController = TextEditingController();
   Uint8List? _image;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -36,7 +37,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
    setState(() {
      _image = input;
    });
+   
   }
+
+  void signUpUser() async{
+    setState(() {
+      _isLoading = true;
+    });
+     String res = await AuthMethods().signUpUser(email: _emailController.text, password: _passController.text, username: _userNamaeController.text, bio: _bioController.text, file: _image!);
+     setState(() {
+       _isLoading = false;
+     });
+        if(res != 'success')
+        {
+        showSnackBar(context, res);
+        }
+       
+   }
+   
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -44,10 +62,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Container(
            padding: const EdgeInsets.symmetric(horizontal: 32),
            width: double.infinity,
-           child: Column(
+           child:  Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Flexible(child: Container(),flex: 2,),
+              Flexible(child:Container(),flex: 2,),
                SvgPicture.asset('assets/ic_instagram.svg',color: primaryColor, height: 64,),
                const SizedBox(height: 64,),
                 const SizedBox(
@@ -94,12 +112,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
 
                InkWell(
-                onTap: () async {
-                  String res = await AuthMethods().signUpUser(email: _emailController.text, password: _passController.text, username: _userNamaeController.text, bio: _bioController.text, file: _image!);
-                  print(res);
-                } ,
+                onTap: signUpUser ,
                  child: Container(
-                  child : const Text('Sign-up'),
+                  child :_isLoading ? const Center(child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),) : const Text('Sign-up'),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
